@@ -20,7 +20,7 @@
   const phrases = ref([]);
   
   async function fetchPhrases() {
-    const { data, error } = await supabase.from('phrases').select('*').eq('category_id', categoryId);
+    const { data, error } = await supabase.from('phrases').select('*').eq('category_id', categoryId).order('id', { ascending: false });
     if (!error) phrases.value = data;
   }
   

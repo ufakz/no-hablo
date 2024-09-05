@@ -7,8 +7,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import { supabase, uploadCategoryIconToSupabase } from '../utils/supabase';
-import { generateCategoryIcon } from '../services/icon-generation'
+import { supabase } from '../utils/supabase';
+import { generatePhrases, translateText } from '../services/text';
 
 const emit = defineEmits(['category-added'])
 
@@ -18,24 +18,43 @@ async function addCategory() {
     if (!categoryName.value.trim()) return;
 
     try {
-        const iconUrl = await generateCategoryIcon(categoryName.value.trim());
+        // const response = await fetch('/.netlify/functions/upload-icon', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ categoryName: categoryName.value.trim() }),
+        // });
 
-        if (!iconUrl) {
-            console.error('Failed to generate icon.');
-            return;
-        }
+        // const result = await response.json();
 
-        const supabaseIconUrl = await uploadCategoryIconToSupabase(categoryName.value.trim(), iconUrl);
+        // console.log(result);
 
-        if (!supabaseIconUrl) {
-            console.error('Failed to upload icon to Supabase.');
-            return;
-        }
-
-        const { data, error } = await supabase.from('categories').insert([{ name: categoryName.value.trim(), icon_url: supabaseIconUrl }]);
+        const { data, error } = await supabase.from('categories').insert([{ name: categoryName.value.trim() }]).select();
 
         if (error) {
             console.error('Error adding category:', error.message);
+        } else {
+            categoryName.value = '';
+        }
+
+        const phrases = await generatePhrases(data[0].name)
+
+        const translatedPhrasesPromises = phrases.map(async (phrase) => {
+            const translation = await translateText(phrase, 'Spanish'); 
+            return {
+                category_id: data[0].id,
+                english: phrase,
+                translated: translation,
+            };
+        });
+
+        const translatedPhrases = await Promise.all(translatedPhrasesPromises);
+
+        const { data: phraseData, error: phraseInsertError } = await supabase.from('phrases').insert(translatedPhrases);
+
+        if (phraseInsertError) {
+            throw new Error(`Error inserting phrases: ${phraseInsertError.message}`);
         } else {
             categoryName.value = '';
             emit('category-added');
@@ -48,6 +67,4 @@ async function addCategory() {
 }
 </script>
 
-<style scoped>
-/* Add any specific styling if needed */
-</style>
+<style scoped></style>

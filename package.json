@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.3",
+    "base64-arraybuffer": "^1.0.2",
     "openai": "^4.57.3",
     "vue": "^3.4.37",
     "vue-router": "^4.4.3"

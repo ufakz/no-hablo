@@ -9,7 +9,7 @@
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '../utils/supabase';
-import { translateText } from '../services/translation';
+import { translateText } from '../services/text';
 
 const emit = defineEmits(['phrase-added'])
 
@@ -40,4 +40,4 @@ async function addPhrase() {
 </script>
 
 <style scoped>
-</style>
+</style>../services/text

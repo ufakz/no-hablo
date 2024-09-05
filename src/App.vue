@@ -1,11 +1,13 @@
 <template>
   <div class="max-w-md mx-auto p-4">
+    <Header />
+
     <router-view />
   </div>
 </template>
 
 <script setup>
-// No specific script needed for App.vue as it serves as a container for routing
+import Header from './components/Header.vue';
 </script>
 
 <style>
