@@ -20,7 +20,6 @@ const phraseEnglish = ref('');
 async function addPhrase() {
     if (!phraseEnglish.value.trim()) return;
 
-    // Call translation API
     const translatedText = await translateText(phraseEnglish.value, 'es'); // Spanish translation
 
     const { data, error } = await supabase.from('phrases').insert([{
@@ -39,5 +38,4 @@ async function addPhrase() {
 </script>
 
 <style scoped>
-/* Add any specific styling if needed */
 </style>

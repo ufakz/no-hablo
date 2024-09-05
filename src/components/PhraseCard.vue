@@ -15,7 +15,7 @@ const props = defineProps({
 
 function playAudio() {
     const utterance = new SpeechSynthesisUtterance(props.phrase.translated);
-    utterance.lang = 'es'; // Set language to Spanish
+    utterance.lang = 'es'; 
     speechSynthesis.speak(utterance);
 }
 </script>
