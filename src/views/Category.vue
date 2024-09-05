@@ -9,7 +9,7 @@
   
   <script setup>
   import { ref, onMounted } from 'vue';
-  import { supabase } from '../supabase';
+  import { supabase } from '../utils/supabase';
   import { useRoute } from 'vue-router';
   import AddPhrase from '../components/AddPhrase.vue';
   import PhraseCard from '../components/PhraseCard.vue';

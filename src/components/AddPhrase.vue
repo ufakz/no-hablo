@@ -8,7 +8,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { supabase } from '../supabase';
+import { supabase } from '../utils/supabase';
 import { translateText } from '../services/TranslationService';
 
 const props = defineProps({
