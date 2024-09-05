@@ -9,7 +9,9 @@
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '../utils/supabase';
-import { translateText } from '../services/TranslationService';
+import { translateText } from '../services/translation';
+
+const emit = defineEmits(['phrase-added'])
 
 const props = defineProps({
     categoryId: Number,

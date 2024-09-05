@@ -9,6 +9,8 @@
 import { ref } from 'vue';
 import { supabase } from '../utils/supabase';
 
+const emit = defineEmits(['category-added'])
+
 const categoryName = ref('');
 
 async function addCategory() {
