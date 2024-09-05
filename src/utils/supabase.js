@@ -9,7 +9,9 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const uploadCategoryIconToSupabase = async (category, imageUrl) => {
   try {
-    const response = await fetch(imageUrl);i
+    
+    const proxyUrl = `/netlify/functions/fetch-image?url=${encodeURIComponent(imageUrl)}`;
+    const response = await fetch(proxyUrl);
     const blob = await response.blob();
 
     const fileName = `${category.replace(/\s+/g, '-')}-icon.png`;
